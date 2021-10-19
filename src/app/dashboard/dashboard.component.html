@@ -1,0 +1,176 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" size="medium" color="#fff" type="square-jelly-box">
+    <p style="font-size: 20px; color: white">Please wait...</p>
+</ngx-spinner>
+
+<div style="background-color: #e3b04b;" class="pt-10 pb-21"></div>
+<div class="container-fluid mt-n22 px-6">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-12">
+            <!-- Page header -->
+            <div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="mb-2 mb-lg-0">
+                        <h5 class="mb-0 fw-bold text-white">Welcome:</h5>
+                    </div>
+                    <div>
+                        <a class="logout" (click)="logout()" style="cursor: pointer;">log out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-lg-6 col-md-12 col-12 mt-6">
+            <!-- card -->
+            <div class="card rounded-3">
+                <!-- card body -->
+                <div class="card-body">
+                    <!-- heading -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h4 class="mb-0">Registered Users</h4>
+                        </div>
+                        <div class="icon-shape icon-md bg-light-primary text-primary rounded-1">
+                            <fa-icon [icon]="faGlobeAfrica" class="fs-4" style="cursor: pointer;"></fa-icon>
+                        </div>
+                    </div>
+                    <!-- project number -->
+                    <div>
+                        <h1 class="fw-bold">{{users.length}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-lg-6 col-md-12 col-12 mt-6">
+            <!-- card -->
+            <div class="card rounded-3">
+                <!-- card body -->
+                <div class="card-body">
+                    <!-- heading -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h4 class="mb-0">Lost Documents</h4>
+                        </div>
+                        <div class="icon-shape icon-md bg-light-primary text-primary rounded-1">
+                            <fa-icon [icon]="faMap" class="fs-4" style="cursor: pointer;"
+                                (click)="navigateTo('view-lostDocuments')"></fa-icon>
+                        </div>
+                    </div>
+                    <!-- project number -->
+                    <div>
+                        <h1 class="fw-bold">{{lostDocuments.length}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-lg-6 col-md-12 col-12 mt-6">
+            <!-- card -->
+            <div class="card rounded-3">
+                <!-- card body -->
+                <div class="card-body">
+                    <!-- heading -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h4 class="mb-0">Found Documents</h4>
+                        </div>
+                        <div class="icon-shape icon-md bg-light-primary text-primary rounded-1">
+                            <fa-icon [icon]="faFileAlt" class="fs-4" style="cursor: pointer;"
+                                (click)="navigateTo('view-foundDocuments')"></fa-icon>
+                        </div>
+                    </div>
+                    <!-- project number -->
+                    <div>
+                        <h1 class="fw-bold">{{foundDocuments.length}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-lg-6 col-md-12 col-12 mt-6">
+            <!-- card -->
+            <div class="card rounded-3">
+                <!-- card body -->
+                <div class="card-body">
+                    <!-- heading -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h4 class="mb-0">Lost/Found Chats</h4>
+                        </div>
+                        <div class="icon-shape icon-md bg-light-primary text-primary rounded-1">
+                            <fa-icon [icon]="faAlignJustify" class="fs-4" style="cursor: pointer;"
+                                (click)="navigateTo('view-chats')"></fa-icon>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="fw-bold">{{counter}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-lg-6 col-md-12 col-12 mt-6">
+            <!-- card -->
+            <div class="card rounded-3">
+                <!-- card body -->
+                <div class="card-body">
+                    <!-- heading -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h4 class="mb-0">Auth Documents</h4>
+                        </div>
+                        <div class="icon-shape icon-md bg-light-primary text-primary rounded-1">
+                            <fa-icon [icon]="faUsers" class="fs-4" style="cursor: pointer;"
+                                (click)="navigateTo('view-auth-docs')"></fa-icon>
+                        </div>
+                    </div>
+                    <!-- project number -->
+                    <div>
+                        <h1 class="fw-bold">{{authDocs.length}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- row  -->
+    <div class="row mt-6">
+        <div class="col-md-12 col-12">
+            <!-- card  -->
+            <div class="card">
+                <!-- card header  -->
+                <div class="card-header bg-white border-bottom-0 py-4">
+                    <h4 class="mb-0">Registered users</h4>
+                </div>
+                <!-- table  -->
+                <div class="table-responsive">
+                    <table class="table text-nowrap mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Last name</th>
+                                <th>Cellphone</th>
+                                <th>Email</th>
+                                <th>Identity #</th>
+                                <th>Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: p }">
+                                <td>
+                                    <h5 class="ms-3 lh-1">
+                                        <a style="cursor: pointer;"
+                                            class="text-inherit">{{user.name}}</a>
+                                    </h5>
+                                </td>
+                                <td class="align-left">{{user.lastname}}</td>
+                                <td class="align-left">{{user.cellphone}}</td>
+                                <td class="align-left">{{user.email}}</td>
+                                <td class="align-left">{{user.idnumber}}</td>
+                                <td class="align-left dark">{{user.address}}</td>
+                            </tr>
+                        </tbody>
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
