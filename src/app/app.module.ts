@@ -20,6 +20,7 @@ import { environment } from 'src/environments/environment';
 import { ViewLostDocumentsComponent } from './view-lost-documents/view-lost-documents.component';
 import { ViewFoundDocumentsComponent } from './view-found-documents/view-found-documents.component';
 import { ViewChatsComponent } from './view-chats/view-chats.component';
+import { AuthDocComponent } from './auth-doc/auth-doc.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ViewChatsComponent } from './view-chats/view-chats.component';
     HomeComponent,
     ViewLostDocumentsComponent,
     ViewFoundDocumentsComponent,
-    ViewChatsComponent
+    ViewChatsComponent,
+    AuthDocComponent
   ],
   imports: [
     BrowserModule,

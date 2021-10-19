@@ -29,7 +29,7 @@
                             <fa-icon [icon]="faBackward" (click)="navigateTo('dashboard')" class="fs-4" style="cursor: pointer;"></fa-icon>
                         </div>
                         <div style="padding-bottom: 10px;"></div>
-                        <h4 class="mb-0">View Chats</h4>
+                        <h4 class="mb-0">View Certify document</h4>
                     </div>
                 </div>
                 <!-- table  -->
@@ -37,17 +37,17 @@
                     <table class="table text-nowrap mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th>Chat</th>
+                                <th>Document Type</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr
-                                *ngFor="let chat of chats | keyvalue | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+                                *ngFor="let chat of authDocs | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
                                 <td class="align-left">view chat ({{i+1}})</td>
                                 <td>
                                     <div class="icon-shape icon-xs">
-                                        <fa-icon [icon]="faEye" style="cursor: pointer;" (click)="view(chat, mymodal)">
+                                        <fa-icon [icon]="faEye" style="cursor: pointer;" (click)="view(chat)">
                                         </fa-icon>
                                     </div>
                                 </td>
@@ -62,7 +62,7 @@
     </div>
 </div>
 
-<ng-template #mymodal let-modal>
+<!-- <ng-template #mymodal let-modal>
     <div class="modal-header">
         <h4 class="modal-title pull-left" id="modal-basic-title">{{headerMenu}}</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -95,4 +95,4 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss('Cross click')">Close</button>
     </div>
-</ng-template>
+</ng-template> -->

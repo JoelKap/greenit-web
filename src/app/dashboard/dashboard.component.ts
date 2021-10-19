@@ -24,7 +24,6 @@ export class DashboardComponent implements OnInit {
   headerMenu: string = '';
   closeResult: string = '';
 
-  faMap = faMap;
   faUsers = faUsers;
   faFileAlt = faFileAlt;
   faPencilAlt = faPencilAlt;

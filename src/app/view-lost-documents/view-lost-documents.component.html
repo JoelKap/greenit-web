@@ -1,5 +1,5 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" size="medium" color="#fff" type="square-jelly-box">
-    <p style="font-size: 20px; color: white">S'il vous plaît, attendez...</p>
+    <p style="font-size: 20px; color: white">Please wait...</p>
 </ngx-spinner>
 <div style="background-color: #e3b04b;" class="pt-10 pb-21"></div>
 <div class="container-fluid mt-n22 px-6">
@@ -27,7 +27,7 @@
                 <div class="card-header bg-white border-bottom-0 py-4">
                     <div class="mb-2 mb-lg-0">
                         <div class="icon-shape icon-md bg-light-primary text-primary rounded-1">
-                            <fa-icon [icon]="faPlusSquare" class="fs-4" style="cursor: pointer;"></fa-icon>
+                            <fa-icon [icon]="faBackward" (click)="navigateTo('dashboard')" class="fs-4" style="cursor: pointer;"></fa-icon>
                         </div>
                         <div style="padding-bottom: 10px;"></div>
                         <h4 class="mb-0">Lost Documents</h4>

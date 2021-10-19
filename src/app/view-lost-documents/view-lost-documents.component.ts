@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { faMap, faUsers, faFileAlt, faPencilAlt, faGlobeAfrica, faMoneyBillAlt, faAlignJustify, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faMap, faUsers, faFileAlt, faPencilAlt, faGlobeAfrica, faMoneyBillAlt, faAlignJustify, faBackward } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-view-lost-documents',
@@ -19,7 +19,7 @@ export class ViewLostDocumentsComponent implements OnInit {
   faGlobeAfrica = faGlobeAfrica;
   faMoneyBillAlt = faMoneyBillAlt;
   faAlignJustify = faAlignJustify;
-  faPlusSquare = faPlusSquare;
+  faBackward = faBackward;
 
   constructor(
     private router: Router,
