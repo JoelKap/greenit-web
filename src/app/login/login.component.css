@@ -20,8 +20,6 @@ a .forgot-password {
     }
 }
 
-
-
 .ftco-section {
     padding: 7em 0;
 }
@@ -63,9 +61,9 @@ a .forgot-password {
 }
 
 .login-wrap {
-    position              : relative;
-    background            : #fff h3;
-    background-font-weight: 300;
+    position   : relative;
+    background : #fff h3;
+    font-weight: 300;
 }
 
 .form-group {

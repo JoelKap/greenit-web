@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
+import { Image } from '../home/image';
 
 import { touchAllFormFields } from '../angular-helpers/validation';
 import { AuthService } from '../auth.service';
@@ -16,6 +17,7 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  image: any = Image;
 
   selectedUserType: any = {};
   governments = [{ name: 'Police Station' }, { name: 'Post office' }];
@@ -26,6 +28,7 @@ export class LoginComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private angularFireAuth: AngularFireAuth,
     private formBuilder: FormBuilder) {
+      this.image = { src: '../assets/images/lost.jpg', alt: 'LostnFound', title: 'LostnFound' };
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],

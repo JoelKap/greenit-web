@@ -3,7 +3,7 @@
         <header class="pb-3 mb-4 border-bottom">
             <a style="cursor: pointer;" (click)="navigateTo('home')" class="d-flex align-items-center text-dark text-decoration-none">
                 <div>
-                    <img style="height: 40px;" src="/assets/images/lost.png" alt="lostnfound">
+                    <img style="height: 40px;" [src]="image.src" alt="lostnfound">
                 </div>
                 <h2 class="fs-4" style="padding-left: 25px;">Lost n Found</h2>
             </a>

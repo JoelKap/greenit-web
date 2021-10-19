@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Image } from './image';
+
+declare var require: any;
 
 @Component({
   selector: 'app-home',
@@ -8,8 +11,12 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   isLoggedInClicked: boolean = false;
+  imgname = '';
+  image: any = Image;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+    this.image = { src: '../assets/images/lost.png', alt: 'LostnFound', title: 'LostnFound' };
+   }
 
   ngOnInit(): void {
   }
