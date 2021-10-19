@@ -4,8 +4,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import * as _ from 'lodash';
 
 import { touchAllFormFields } from '../angular-helpers/validation';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,25 +17,32 @@ import { touchAllFormFields } from '../angular-helpers/validation';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
+  selectedUserType: any = {};
+  governments = [{ name: 'Police Station' }, { name: 'Post office' }];
   constructor(
+    private authService: AuthService,
     private toast: ToastrService,
     private router: Router,
     private spinner: NgxSpinnerService,
     private angularFireAuth: AngularFireAuth,
-    private formBuilder: FormBuilder) { 
-      this.loginForm = this.formBuilder.group({
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-      });
-    }
+    private formBuilder: FormBuilder) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
 
   ngOnInit(): void {
   }
 
   async login(): Promise<void> {
     if (!this.loginForm.valid) {
-      debugger;
       touchAllFormFields(this.loginForm);
+      return;
+    }
+
+    if (_.isEmpty(this.selectedUserType)) {
+      this.toast.info('Plase select user');
       return;
     }
     this.spinner.show();
@@ -46,6 +55,8 @@ export class LoginComponent implements OnInit {
 
   isSuccessfully(resp: any) {
     this.spinner.hide();
+    localStorage.setItem('token', 'x!4fgZ45');
+    this.authService.saveUserTypeToStore(this.selectedUserType.name);
     this.router.navigateByUrl('/dashboard');
   }
 

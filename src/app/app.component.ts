@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-
-import { AdminService } from './service/admin.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,15 +11,21 @@ import { AdminService } from './service/admin.service';
 export class AppComponent implements OnInit {
   title = 'lostnfound-web';
   isLoggedInClicked: boolean = false;
+  private authState: Observable<any>
+  // private currentUser: firebase.User = null;
 
   constructor(private router: Router,
-    private adminService: AdminService) { }
+    public afAuth: AngularFireAuth,) {
+      this.authState = this.afAuth.authState;
+     }
 
     isLoggedIn() {
       return !!localStorage.getItem('token');
     }
 
   ngOnInit(): void {
-    this.isLoggedInClicked = this.adminService.isLoggedInClicked;
+    // debugger;
+    // const xx = this.authState !== null;
+    // this.isLoggedInClicked = this.adminService.isLoggedInClicked;
   }
 }

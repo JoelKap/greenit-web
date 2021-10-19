@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { faEye, faPlusSquare, faBackward} from '@fortawesome/free-solid-svg-icons';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-view-chats',
@@ -15,6 +16,7 @@ export class ViewChatsComponent implements OnInit {
   p: number = 1;
 
   counter: number = 0;
+  userType: string = '';
   headerMenu: string = '';
   closeResult: string = '';
 
@@ -22,10 +24,13 @@ export class ViewChatsComponent implements OnInit {
   faBackward = faBackward;
 
   constructor(
+    private authService: AuthService,
     public firestore: AngularFirestore,
     private modalService: NgbModal,
     private router: Router,
-  ) { }
+  ) {
+    this.userType = this.authService.getUserTypeFromStore();
+   }
 
   ngOnInit(): void {
     this.loadChats();

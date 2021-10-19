@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { faMap, faUsers, faFileAlt, faPencilAlt, faGlobeAfrica, faMoneyBillAlt, faAlignJustify } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +23,7 @@ export class DashboardComponent implements OnInit {
 
   p: number = 1;
 
+  userType: string = '';
   headerMenu: string = '';
   closeResult: string = '';
 
@@ -32,9 +35,16 @@ export class DashboardComponent implements OnInit {
   faAlignJustify = faAlignJustify;
 
   constructor(
+    public afAuth: AngularFireAuth,
+    private authService: AuthService,
     public firestore: AngularFirestore,
     private router: Router,
-  ) { }
+  ) {
+    this.userType = this.authService.getUserTypeFromStore();
+    if(this.userType === ''){
+      this.logout();
+    }
+   }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -45,11 +55,14 @@ export class DashboardComponent implements OnInit {
   }
 
   logout() {
-    localStorage.clear();
-    this.router.navigateByUrl('/home');
+    this.afAuth.signOut().then(() => {
+      localStorage.clear();
+      this.router.navigateByUrl('/home');
+    })
   }
 
   navigateTo(url: string) {
+    this.authService.saveUserTypeToStore(this.userType);
     this.router.navigateByUrl('/' + url);
   }
 

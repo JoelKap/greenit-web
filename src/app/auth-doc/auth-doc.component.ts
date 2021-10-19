@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { faEye, faBackward } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-auth-doc',
@@ -13,12 +14,17 @@ export class AuthDocComponent implements OnInit {
   authDocs: any = [];
   p: number = 1;
 
+  userType: string = '';
   faEye = faEye;
   faBackward = faBackward;
 
-  constructor(public firestore: AngularFirestore,
+  constructor(
+    private authService: AuthService,
+    public firestore: AngularFirestore,
     private modalService: NgbModal,
-    private router: Router) { }
+    private router: Router) {
+      this.userType = this.authService.getUserTypeFromStore();
+     }
 
   ngOnInit(): void {
   }

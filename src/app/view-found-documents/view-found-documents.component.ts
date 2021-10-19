@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { faMap, faUsers, faFileAlt, faPencilAlt, faGlobeAfrica, faMoneyBillAlt, faAlignJustify, faBackward } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-view-found-documents',
@@ -11,7 +12,8 @@ import { faMap, faUsers, faFileAlt, faPencilAlt, faGlobeAfrica, faMoneyBillAlt, 
 export class ViewFoundDocumentsComponent implements OnInit {
   p: number = 1;
   foundDocuments: any = [];
-
+  userType: string = '';
+  
   faMap = faMap;
   faUsers = faUsers;
   faFileAlt = faFileAlt;
@@ -22,9 +24,12 @@ export class ViewFoundDocumentsComponent implements OnInit {
   faBackward = faBackward;
   
   constructor(
+    private authService: AuthService,
     private router: Router,
     public firestore: AngularFirestore,
-  ) { }
+  ) {
+    this.userType = this.authService.getUserTypeFromStore();
+   }
 
   ngOnInit(): void {
     this.loadFoundDocuments();

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { faMap, faUsers, faFileAlt, faPencilAlt, faGlobeAfrica, faMoneyBillAlt, faAlignJustify, faBackward } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-view-lost-documents',
@@ -10,6 +11,7 @@ import { faMap, faUsers, faFileAlt, faPencilAlt, faGlobeAfrica, faMoneyBillAlt, 
 })
 export class ViewLostDocumentsComponent implements OnInit {
   p: number = 1;
+  userType: string = '';
   lostDocuments: any = [];
 
   faMap = faMap;
@@ -22,9 +24,12 @@ export class ViewLostDocumentsComponent implements OnInit {
   faBackward = faBackward;
 
   constructor(
+    private authService: AuthService,
     private router: Router,
     public firestore: AngularFirestore,
-  ) { }
+  ) {
+    this.userType = this.authService.getUserTypeFromStore();
+   }
 
   ngOnInit(): void {
     this.loadLostDocuments();

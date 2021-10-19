@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AdminService } from '../service/admin.service';
 
 @Component({
   selector: 'app-home',
@@ -10,15 +9,13 @@ import { AdminService } from '../service/admin.service';
 export class HomeComponent implements OnInit {
   isLoggedInClicked: boolean = false;
 
-  constructor(private router: Router,
-    private adminService: AdminService) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   login() {
     this.isLoggedInClicked = true;
-    this.adminService.saveLogToStore(this.isLoggedInClicked);
     this.router.navigateByUrl('/login');
   }
 
