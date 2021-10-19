@@ -55,9 +55,17 @@ export class LoginComponent implements OnInit {
 
   isSuccessfully(resp: any) {
     this.spinner.hide();
-    localStorage.setItem('token', 'x!4fgZ45');
-    this.authService.saveUserTypeToStore(this.selectedUserType.name);
-    this.router.navigateByUrl('/dashboard');
+    const email = resp.user.multiFactor.user.email;
+    if(email === 'postoffice@lostnfound.co.za' || email === 'policestation@lostnfound.co.za') {
+      localStorage.setItem('token', 'x!4fgZ45');
+      this.authService.saveUserTypeToStore(this.selectedUserType.name);
+      this.router.navigateByUrl('/dashboard');
+    } else {
+      this.toast.error('You have put incorrect credentials');
+      return;
+    }
+
+
   }
 
   hasFailed(err: any) {
