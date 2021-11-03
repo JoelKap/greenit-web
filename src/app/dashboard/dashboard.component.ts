@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit {
     this.loadLostDocuments();
     this.loadFoundDocuments();
     this.loadChats();
-    // this.loadAuthDocs();
+    this.loadAuthDocs();
   }
 
   logout() {
@@ -81,6 +81,14 @@ export class DashboardComponent implements OnInit {
     }).valueChanges()
       .subscribe((resp) => {
         this.lostDocuments = resp;
+      })
+  }
+
+  private loadAuthDocs() {
+    return this.firestore.collection<any>(`userDocuments`)
+      .valueChanges()
+      .subscribe((resp) => {
+        this.authDocs = resp;
       })
   }
 

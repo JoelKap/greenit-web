@@ -14,7 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./auth-doc.component.css']
 })
 export class AuthDocComponent implements OnInit {
-  authDocs: any = [];
+  authDocs: any[] = [];
   p: number = 1;
   userType: string = '';
   lostDocuments: any = [];
@@ -47,9 +47,11 @@ export class AuthDocComponent implements OnInit {
 
   private authDocuments() {
     this.spinner.show();
+    this.authDocs.length = 0;
     return this.firestore.collection<any>(`userDocuments`)
       .valueChanges()
       .subscribe((resp) => {
+        this.authDocs.length = 0;
         resp.forEach((doc) => {
           this.firestore.collection<any>(`users`, (ref) => ref.where('email', '==', doc.email))
             .valueChanges()
@@ -65,9 +67,11 @@ export class AuthDocComponent implements OnInit {
 
 
   Download(doc: any) {
+    this.spinner.show();
     var fileRef = this.storage.ref(`files/${doc.documentId}`);
 
     fileRef.getDownloadURL().toPromise().then((url) => {
+      this.spinner.hide();
       var link = document.createElement("a");
       if (link.download !== undefined) {
           link.setAttribute("href", url);
