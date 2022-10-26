@@ -7,7 +7,7 @@ declare var require: any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
   isLoggedInClicked: boolean = false;
@@ -15,11 +15,14 @@ export class HomeComponent implements OnInit {
   image: any = Image;
 
   constructor(private router: Router) {
-    this.image = { src: '../assets/images/lost.png', alt: 'LostnFound', title: 'LostnFound' };
-   }
-
-  ngOnInit(): void {
+    this.image = {
+      src: '../assets/images/greenIt.png',
+      alt: 'GreenIt',
+      title: 'GreenIt',
+    };
   }
+
+  ngOnInit(): void {}
 
   login() {
     this.isLoggedInClicked = true;
@@ -29,5 +32,4 @@ export class HomeComponent implements OnInit {
   navigateTo(url: string) {
     this.router.navigateByUrl('/' + url);
   }
-
 }

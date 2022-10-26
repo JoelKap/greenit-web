@@ -1,57 +1,78 @@
 <main>
-    <div class="container py-4">
-        <header class="pb-3 mb-4 border-bottom">
-            <a style="cursor: pointer;" (click)="navigateTo('home')" class="d-flex align-items-center text-dark text-decoration-none">
-                <div>
-                    <img style="height: 40px;" [src]="image.src" alt="lostnfound">
-                </div>
-                <h2 class="fs-4" style="padding-left: 25px;">Lost n Found</h2>
-            </a>
-            <a class="pull-left" (click)="login()" style="cursor: pointer; color: black;cursor: pointer;color: black; float: right; margin-top: -29px; text-decoration: none;">Log in</a>
-        </header>
-
-        <div class="p-5 mb-4 bg-light rounded-3">
-            <div class="container-fluid py-5">
-                <h1 class="display-5 fw-bold">When you have Lost or Found Property!</h1>
-                <p class="col-md-8 fs-4">Or you can visit your local police station and complete a 
-                    lost property report in person.
-
-                    When you report lost property to Police you will receive a Police Acknowledgement 
-                    Form (PAF) with a reference number that can be used for insurance purposes.
-                    
-                    Items that are handed in to Police are held for a sufficient period of time 
-                    to make the necessary enquiries. Keeping serial numbers greatly improves your 
-                    chances of identifying property if it is handed in.
-                </p>
-                <button class="btn btn-primary btn-lg" type="button">More info...</button>
-            </div>
+  <div class="container py-4">
+    <header class="pb-3 mb-4 border-bottom">
+      <a
+        style="cursor: pointer"
+        (click)="navigateTo('home')"
+        class="d-flex align-items-center text-dark text-decoration-none"
+      >
+        <div>
+          <img style="height: 40px" [src]="image.src" alt="green it" />
         </div>
+        <h2 class="fs-4" style="padding-left: 25px"></h2>
+      </a>
+      <a
+        class="pull-left"
+        (click)="login()"
+        style="
+          cursor: pointer;
+          color: black;
+          cursor: pointer;
+          color: black;
+          float: right;
+          margin-top: -29px;
+          text-decoration: none;
+        "
+        >Log in</a
+      >
+    </header>
 
-        <div class="row align-items-md-stretch">
-            <div class="col-md-6">
-                <div class="h-100 p-5 text-white bg-danger rounded-3">
-                    <h2>Post Office</h2>
-                    <p>The National Customer Service Centre is offering a variety of services. 
-                        Not only does the National Customer Service Centre do Track and Tracing of items, 
-                        it also handles calls for our Transport and Logistics Business Unit.</p>
-                    <button class="btn btn-outline-light" type="button">More info...</button>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="h-100 p-5 bg-light border rounded-3">
-                    <h2>Police Station</h2>
-                    <p>The information above will be used solely for this purpose. 
-                    Lost and found property records are retained for one year from the date of the last 
-                    action taken for each item or report. Under the Data Protection Act, you have the right to 
-                    withdraw your consent at any time – to do this, please call 101. More information about how 
-                    Police Scotland processes your personal data is available on our website</p>
-                    <button class="btn btn-outline-secondary" type="button">More info...</button>
-                </div>
-            </div>
-        </div>
-
-        <footer class="pt-3 mt-4 text-muted border-top">
-            &copy; 2021
-        </footer>
+    <div class="p-5 mb-4 bg-light rounded-3">
+      <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">About us</h1>
+        <p class="col-md-8 fs-4">
+          In the contemporary era, going green is the goal of almost every top
+          tech-savvy company in the world. These mainstream tech companies have
+          realized that going green not only increases social corporate
+          responsibility outlook and acquiring more business leads but also in
+          smoothening operations and reducing the overall energy costs.
+        </p>
+      </div>
     </div>
+
+    <div class="row align-items-md-stretch">
+      <div class="col-md-6">
+        <div class="h-100 p-5 text-white bg-success rounded-3">
+          <h2 style="color: white">Recycling</h2>
+          <p>
+            E-waste is a fast growing issue, with between 20-50 million tons
+            being produced around the world each year. Most of this waste isn't
+            processed in an effective way, and can seriously harm the
+            environment of those nearby.
+          </p>
+          <p>
+            The most effective way to reduce waste, is not create it in the
+            first place. Furthermore, as much as 80% of the energy used across a
+            PC’s working life is expended during its manufacture, before it is
+            even switched on.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3">
+          <h2>Repair</h2>
+          <p>
+            The right to repair has evolved from a consumer rallying cry to a
+            seeming inevitability in a growing number of markets. As legislation
+            passes and regulations arrive, manufacturers need to redesign their
+            products and rethink supply chains and customer service. However,
+            this also offers companies an opportunity to create new business
+            models and demonstrate sustainability in their offerings.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="pt-3 mt-4 text-muted border-top">&copy; 2022</footer>
+  </div>
 </main>

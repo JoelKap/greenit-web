@@ -18,10 +18,11 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { environment } from 'src/environments/environment';
-import { ViewLostDocumentsComponent } from './view-lost-documents/view-lost-documents.component';
-import { ViewFoundDocumentsComponent } from './view-found-documents/view-found-documents.component';
-import { ViewChatsComponent } from './view-chats/view-chats.component';
-import { AuthDocComponent } from './auth-doc/auth-doc.component';
+import { ViewDevicesComponent } from './view-devices/view-devices.component';
+import { ViewRecyclesComponent } from './view-recycles/view-recycles.component';
+import { ViewRepairsComponent } from './view-repairs/view-repairs.component';
+import { NotificationComponent } from './notification/notification.component';
+import { RepairDashboardComponent } from './repair-dashboard/repair-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -29,10 +30,11 @@ import { AuthDocComponent } from './auth-doc/auth-doc.component';
     LoginComponent,
     DashboardComponent,
     HomeComponent,
-    ViewLostDocumentsComponent,
-    ViewFoundDocumentsComponent,
-    ViewChatsComponent,
-    AuthDocComponent
+    ViewDevicesComponent,
+    ViewRecyclesComponent,
+    ViewRepairsComponent,
+    NotificationComponent,
+    RepairDashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +53,6 @@ import { AuthDocComponent } from './auth-doc/auth-doc.component';
     AngularFireStorageModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,0 +1,216 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="large"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+>
+  <p style="font-size: 20px; color: white">Please wait...</p>
+</ngx-spinner>
+<div
+  style="background-image: url(../../assets/images/background-header.jpg)"
+  class="pt-10 pb-21"
+></div>
+<div class="container-fluid mt-n22 px-6">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-12">
+      <!-- Page header -->
+      <div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="mb-2 mb-lg-0">
+            <h5 class="mb-0 fw-bold text-white">Welcome: {{ userType }}</h5>
+          </div>
+          <div>
+            <a class="logout" style="cursor: pointer" (click)="logout()"
+              >log out</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-6">
+    <div class="col-md-12 col-12">
+      <!-- card  -->
+      <div class="card">
+        <!-- card header  -->
+        <div class="card-header bg-white border-bottom-0 py-4">
+          <div class="mb-2 mb-lg-0">
+            <div
+              class="icon-shape icon-md bg-light-primary text-primary rounded-1"
+            >
+              <fa-icon
+                [icon]="faBackward"
+                (click)="navigateTo('dashboard')"
+                class="fs-4"
+                style="cursor: pointer"
+              ></fa-icon>
+            </div>
+            <div style="padding-bottom: 10px"></div>
+            <h4 class="mb-0">Notifications</h4>
+          </div>
+        </div>
+        <!-- table  -->
+        <div class="table-responsive">
+          <div style="padding-left: 15px">
+            <h3>Recycles</h3>
+          </div>
+          <table class="table text-nowrap mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Status</th>
+                <th>Device Type</th>
+                <th>Device Brand</th>
+                <th>Device Model</th>
+                <th>Device Imei</th>
+                <th>Send email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let recyleNotification of recyleNotifications
+                    | paginate: { itemsPerPage: 10, currentPage: p };
+                  let i = index
+                "
+              >
+                <td class="align-left">
+                  {{
+                    recyleNotification.emailSent == false
+                      ? "Email not sent"
+                      : "Email sent"
+                  }}
+                </td>
+                <td class="align-left">{{ recyleNotification.deviceType }}</td>
+                <td class="align-left">
+                  {{ recyleNotification.deviceBrand }}
+                </td>
+                <td class="align-left">
+                  {{ recyleNotification.deviceModel }}
+                </td>
+                <td class="align-left">
+                  {{ recyleNotification.imei }}
+                </td>
+                <td class="align-left">
+                  <div>
+                    <fa-icon
+                      [icon]="faEnvelope"
+                      style="cursor: pointer"
+                      (click)="sendRecycleNotification(recyleNotification)"
+                    >
+                    </fa-icon>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <pagination-controls
+              (pageChange)="p = $event"
+            ></pagination-controls>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-6">
+    <div class="col-md-12 col-12">
+      <!-- card  -->
+      <div class="card">
+        <!-- card header  -->
+        <!-- table  -->
+        <div class="table-responsive">
+          <div style="padding-left: 15px">
+            <h3>Repairs</h3>
+          </div>
+          <table class="table text-nowrap mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Status</th>
+                <th>Device Type</th>
+                <th>Device Brand</th>
+                <th>Device Model</th>
+                <th>Device Imei</th>
+                <th>Send email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let recyleNotification of recyleNotifications
+                    | paginate: { itemsPerPage: 10, currentPage: p };
+                  let i = index
+                "
+              >
+                <td class="align-left">
+                  {{
+                    recyleNotification.emailSent == false
+                      ? "Email not sent"
+                      : "Email sent"
+                  }}
+                </td>
+                <td class="align-left">{{ recyleNotification.deviceType }}</td>
+                <td class="align-left">
+                  {{ recyleNotification.deviceBrand }}
+                </td>
+                <td class="align-left">
+                  {{ recyleNotification.deviceModel }}
+                </td>
+                <td class="align-left">
+                  {{ recyleNotification.imei }}
+                </td>
+                <td class="align-left">
+                  <div>
+                    <fa-icon
+                      [icon]="faEnvelope"
+                      style="cursor: pointer"
+                      (click)="sendRecycleNotification(recyleNotification)"
+                    >
+                    </fa-icon>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <pagination-controls
+              (pageChange)="p = $event"
+            ></pagination-controls>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left" id="modal-basic-title">{{headerMenu}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="row">
+                <div *ngFor="let message of selectedChat.value">
+                    <div col-9 *ngIf="message.from!=='Lost'" class="message"
+                        [ngClass]="{'mymessage': message.from === 'Lost', 'othermessage': message.from !== 'Lost'}">
+                        <p style="color: white;">{{message.from }}</p>
+                        <span style="color: #000;">{{ message.text }}</span>
+                        <br>
+                        <div class="time" style="color: #000 !important;font-size: 10px; margin-top: -5px;">{{message.created.seconds * 1000 | date:'medium'}}</div>
+                    </div>
+
+                    <div offset-3 col-9 *ngIf="message.from==='Lost'" class="message"
+                        [ngClass]="{'mymessage': message.from === 'Lost', 'othermessage': message.from !== 'Lost'}">
+                        <p style="color: white;">{{message.from }}</p>
+                        <span>{{ message.text }}</span>
+                        <br>
+                        <div class="time" style="color: white !important;font-size: 10px; margin-top: -5px;">{{message.created.seconds * 1000 | date:'medium'}}</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss('Cross click')">Close</button>
+    </div>
+</ng-template> -->

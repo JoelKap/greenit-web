@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "lostnfound-web": {
+    "GreenIt-web": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,15 +17,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/lostnfound-web",
+            "outputPath": "dist/GreenIt-web",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.css",
               "src/assets/css/theme.css",
@@ -83,10 +80,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "lostnfound-web:build:production"
+              "browserTarget": "GreenIt-web:build:production"
             },
             "development": {
-              "browserTarget": "lostnfound-web:build:development"
+              "browserTarget": "GreenIt-web:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -94,7 +91,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "lostnfound-web:build"
+            "browserTarget": "GreenIt-web:build"
           }
         },
         "test": {
@@ -104,18 +101,13 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css"],
             "scripts": []
           }
         }
       }
     }
   },
-  "defaultProject": "lostnfound-web"
+  "defaultProject": "GreenIt-web"
 }

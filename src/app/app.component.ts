@@ -6,22 +6,21 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'lostnfound-web';
+  title = 'GreenIt-web';
   isLoggedInClicked: boolean = false;
-  private authState: Observable<any>
+  private authState: Observable<any>;
   // private currentUser: firebase.User = null;
 
-  constructor(private router: Router,
-    public afAuth: AngularFireAuth,) {
-      this.authState = this.afAuth.authState;
-     }
+  constructor(private router: Router, public afAuth: AngularFireAuth) {
+    this.authState = this.afAuth.authState;
+  }
 
-    isLoggedIn() {
-      return !!localStorage.getItem('token');
-    }
+  isLoggedIn() {
+    return !!localStorage.getItem('token');
+  }
 
   ngOnInit(): void {
     // debugger;

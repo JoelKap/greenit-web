@@ -1,0 +1,153 @@
+<div
+  style="background-image: url(../../assets/images/background-header.jpg)"
+  class="pt-10 pb-21"
+></div>
+<div class="container-fluid mt-n22 px-6">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-12">
+      <!-- Page header -->
+      <div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="mb-2 mb-lg-0">
+            <h5 class="mb-0 fw-bold text-white">Welcome: {{ userType }}</h5>
+          </div>
+          <div>
+            <a class="logout" (click)="logout()" style="cursor: pointer"
+              >log out</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-2 col-lg-6 col-md-12 col-12 mt-6">
+      <!-- card -->
+      <div class="card rounded-3">
+        <!-- card body -->
+        <div class="card-body">
+          <!-- heading -->
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h4 class="mb-0">Devices for repair</h4>
+            </div>
+            <div
+              class="icon-shape icon-md bg-light-primary text-primary rounded-1"
+            >
+              <fa-icon
+                [icon]="faUsers"
+                class="fs-4"
+                style="cursor: pointer"
+              ></fa-icon>
+            </div>
+          </div>
+          <!-- project number -->
+          <div>
+            <h1 class="fw-bold">{{ devices.length }}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- row  -->
+  <div class="row mt-6">
+    <div class="col-md-12 col-12">
+      <!-- card  -->
+      <div class="card">
+        <!-- card header  -->
+        <div class="card-header bg-white border-bottom-0 py-4">
+          <h4 class="mb-0">Devices for repairs</h4>
+        </div>
+        <!-- table  -->
+        <div class="table-responsive">
+          <table class="table text-nowrap mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Description</th>
+                <th>Owner</th>
+                <th>comment</th>
+                <th>Has been fixed</th>
+                <th>Has not been fixed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let device of devices
+                    | paginate: { itemsPerPage: 10, currentPage: p }
+                "
+              >
+                <td class="align-left">{{ device.deviceType }}</td>
+                <td class="align-left">{{ device.deviceBrand }}</td>
+                <td class="align-left">{{ device.deviceModel }}</td>
+                <td class="align-left dark">{{ device.owner }}</td>
+                <td class="align-left dark">{{ device.comment }}</td>
+                <td class="align-left">
+                  <div class="icon-shape icon-xs">
+                    <fa-icon
+                      [icon]="faCheck"
+                      style="cursor: pointer"
+                      (click)="fixed(device, true, myAddmodal)"
+                    >
+                    </fa-icon>
+                  </div>
+                </td>
+                <td class="align-left">
+                  <div class="icon-shape icon-xs">
+                    <fa-icon
+                      [icon]="faTimes"
+                      style="cursor: pointer"
+                      (click)="fixed(device, false, myAddmodal)"
+                    >
+                    </fa-icon>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <pagination-controls
+              (pageChange)="p = $event"
+            ></pagination-controls>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #myAddmodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" id="modal-basic-title">
+      Add reject comment
+    </h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="commentForm">
+      <div class="row">
+        <div class="col-sm-12">
+          <textarea
+            required
+            placeholder="Comment"
+            type="text"
+            formControlName="comment"
+            class="form-control mb-4"
+            style="font-family: Arial"
+          >
+          </textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary" (click)="submit()">
+      submit
+    </button>
+  </div>
+</ng-template>

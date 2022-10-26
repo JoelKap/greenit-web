@@ -1,81 +1,134 @@
-<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" size="medium" color="#fff" type="square-jelly-box">
-    <p style="font-size: 20px; color: white">Please wait...</p>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="large"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+>
+  <p style="font-size: 20px; color: white">Please wait...</p>
 </ngx-spinner>
 
 <section class="ftco-section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 text-center mb-5">
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-12 col-lg-10">
-                <div class="wrap d-md-flex">
-                    <img class="img" [src]="image.src" alt="lostnfound">
-                    <!-- <div class="img" style="background-image: url(../../../lost.png);"> 
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 text-center mb-5"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-12 col-lg-10">
+        <div class="wrap d-md-flex">
+          <img class="img" [src]="image.src" alt="GreenIt" />
+          <!-- <div class="img" style="background-image: url(../../../lost.png);"> 
                     </div>-->
-                    <div class="login-wrap p-4 p-md-5">
-                        <div class="d-flex">
-
-                            <div class="w-100">
-                            </div>
-                            <div class="w-100">
-                            </div>
-                        </div>
-                        <form [formGroup]="loginForm" autocomplete="off" class="signin-form">
-                            <div class="form-group mb-3">
-                                <label for="email">Email</label>
-                                <input type="text" autocomplete="off" formControlName="email" class="form-control"
-                                    placeholder="email"
-                                    [ngClass]="{ 'is-invalid': loginForm.controls['email'].touched && loginForm.controls['email'].errors }" />
-                                <div *ngIf="loginForm.controls['email'].errors && !loginForm.controls['email'].pristine"
-                                    style="color: red">
-                                    <div [hidden]="!loginForm.controls['email'].errors.required">Email is required</div>
-                                    <div [hidden]="!loginForm.controls['email'].errors.email">Email must be a valid 
-                                        email
-                                        address</div>
-                                </div>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="password">Password</label>
-                                <input type="password" autocomplete="off" formControlName="password"
-                                    class="form-control" placeholder="Password"
-                                    [ngClass]="{ 'is-invalid': loginForm.controls['password'].touched && loginForm.controls['password'].errors }" />
-                                <div *ngIf="loginForm.controls['password'].errors && !loginForm.controls['password'].pristine"
-                                    style="color: red">
-                                    <div [hidden]="!loginForm.controls['password'].errors.required">Password is required
-                                    </div>
-                                    <div [hidden]="!loginForm.controls['password'].errors.minlength">Password must be at least 6
-                                        characters</div>
-                                </div>
-                            </div>
-                            <div class="form-group mb-3">
-                                    <label>User</label>
-                                    <select class="form-select" aria-label="userType"
-                                        [(ngModel)]="selectedUserType" [ngModelOptions]="{standalone: true}">
-                                        <option value="" disabled="" selected="">Select user
-                                        </option>
-                                        <option *ngFor="let government of governments" [ngValue]="government">
-                                            {{government.name}}</option>
-                                    </select>
-                            </div>
-                            <div class="form-group">
-                                <button type="button"  (click)="login()" class="form-control btn btn-primary rounded submit px-3">Sign
-                                    In</button>
-                            </div>
-                            <div class="form-group d-md-flex">
-                                <div class="w-50 text-left">
-                                    <label class="checkbox-wrap checkbox-primary mb-0">
-                                    </label>
-                                </div>
-                                <!-- <div class="w-50 text-md-right">
+          <div class="login-wrap p-4 p-md-5">
+            <div class="d-flex">
+              <div class="w-100"></div>
+              <div class="w-100"></div>
+            </div>
+            <form
+              [formGroup]="loginForm"
+              autocomplete="off"
+              class="signin-form"
+            >
+              <div class="form-group mb-3">
+                <label for="email">Email</label>
+                <input
+                  type="text"
+                  autocomplete="off"
+                  formControlName="email"
+                  class="form-control"
+                  placeholder="email"
+                  [ngClass]="{
+                    'is-invalid':
+                      loginForm.controls['email'].touched &&
+                      loginForm.controls['email'].errors
+                  }"
+                />
+                <div
+                  *ngIf="
+                    loginForm.controls['email'].errors &&
+                    !loginForm.controls['email'].pristine
+                  "
+                  style="color: red"
+                >
+                  <div [hidden]="!loginForm.controls['email'].errors.required">
+                    Email is required
+                  </div>
+                  <div [hidden]="!loginForm.controls['email'].errors.email">
+                    Email must be a valid email address
+                  </div>
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  autocomplete="off"
+                  formControlName="password"
+                  class="form-control"
+                  placeholder="Password"
+                  [ngClass]="{
+                    'is-invalid':
+                      loginForm.controls['password'].touched &&
+                      loginForm.controls['password'].errors
+                  }"
+                />
+                <div
+                  *ngIf="
+                    loginForm.controls['password'].errors &&
+                    !loginForm.controls['password'].pristine
+                  "
+                  style="color: red"
+                >
+                  <div
+                    [hidden]="!loginForm.controls['password'].errors.required"
+                  >
+                    Password is required
+                  </div>
+                  <div
+                    [hidden]="!loginForm.controls['password'].errors.minlength"
+                  >
+                    Password must be at least 6 characters
+                  </div>
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <label>User</label>
+                <select
+                  class="form-select"
+                  aria-label="userType"
+                  [(ngModel)]="selectedUserType"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                  <option value="" disabled="" selected="">Select user</option>
+                  <option
+                    *ngFor="let government of governments"
+                    [ngValue]="government"
+                  >
+                    {{ government.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <button
+                  type="button"
+                  (click)="login()"
+                  class="form-control btn btn-primary rounded submit px-3"
+                >
+                  Sign In
+                </button>
+              </div>
+              <div class="form-group d-md-flex">
+                <div class="w-50 text-left">
+                  <label class="checkbox-wrap checkbox-primary mb-0"> </label>
+                </div>
+                <!-- <div class="w-50 text-md-right">
                                     <a style="text-decoration: none;">Mot de passe oublié?</a>
                                 </div> -->
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </section>
