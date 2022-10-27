@@ -196,6 +196,10 @@ a .forgot-password {
   color: #e3b04b;
 }
 
+.error-text {
+  color: red;
+}
+
 .hotel-de-ville {
   width: 60px !important;
   height: 60px !important;

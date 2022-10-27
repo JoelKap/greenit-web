@@ -21,12 +21,13 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  repairs: any;
+  repairs: any = [];
   users: any = [];
   repairNotifications: any = [];
   recyleNotifications: any = [];
   devices: any = [];
   recycles: any = [];
+  warantees: any = [];
   size = 0;
   counter: number = 0;
   paymentApprovs: any = [];
@@ -63,7 +64,7 @@ export class DashboardComponent implements OnInit {
     this.loadDevices();
     this.loadRecycles();
     this.loadRepairs();
-    this.loadRepairNotifications();
+    this.loadWarantees();
     this.loadRecycleNotifications();
   }
 
@@ -81,7 +82,9 @@ export class DashboardComponent implements OnInit {
 
   private loadUsers() {
     return this.firestore
-      .collection<any>(`users`)
+      .collection<any>(`users`, (ref) => {
+        return ref.where('isDeleted', '==', false);
+      })
       .valueChanges()
       .subscribe((resp) => {
         this.users = resp;
@@ -101,32 +104,18 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  private loadRepairNotifications() {
-    return this.firestore
-      .collection<any>(`repairs`, (ref) => {
-        return ref.where('emailSent', '==', false);
-      })
-      .valueChanges()
-      .subscribe((resp) => {
-        this.repairNotifications = resp;
-        if (this.recyleNotifications.length) {
-          this.size =
-            this.recyleNotifications.length + this.repairNotifications.length;
-        }
-      });
-  }
-
   private loadRecycleNotifications() {
     return this.firestore
       .collection<any>(`recycles`, (ref) => {
-        return ref.where('emailSent', '==', false);
+        return ref
+          .where('emailSent', '==', false)
+          .where('isDeleted', '==', true);
       })
       .valueChanges()
       .subscribe((resp) => {
         this.recyleNotifications = resp;
-        if (this.repairNotifications.length) {
-          this.size =
-            this.repairNotifications.length + this.recyleNotifications.length;
+        if (this.recyleNotifications.length) {
+          this.size = this.recyleNotifications.length;
         }
       });
   }
@@ -142,14 +131,47 @@ export class DashboardComponent implements OnInit {
       });
   }
 
+  loadWarantees() {
+    debugger;
+    this.warantees.length = 0;
+    return this.firestore
+      .collection<any>(`devices`, (ref) => {
+        return ref.where('isDeleted', '==', false);
+      })
+      .valueChanges()
+      .subscribe((resp) => {
+        if (resp.length)
+          resp.forEach((device) => {
+            var purchaseDate = new Date(device.datePurchased);
+            if (device.warranty.includes('MONTHS')) {
+              var month = device.warranty.replace(' MONTHS', '');
+              var waranty = parseInt(month);
+              var warantyDate = purchaseDate.getDate();
+              var monthInt = purchaseDate.getMonth() + 1;
+              var remainingWarantee = monthInt - waranty;
+
+              if ((remainingWarantee = 0)) {
+                var result = warantyDate - new Date().getDate();
+                if (result > 0 && result <= 7) {
+                  this.warantees.push(device);
+                }
+              }
+            }
+          });
+      });
+  }
+
   private loadRepairs() {
+    this.repairs.length = 0;
     return this.firestore
       .collection<any>(`companiesRepairs`, (ref) => {
         return ref.where('isDeleted', '==', false);
       })
       .valueChanges()
       .subscribe((resp) => {
-        this.repairs = resp;
+        if (resp.length) {
+          this.repairs = resp;
+        }
       });
   }
 
@@ -157,7 +179,7 @@ export class DashboardComponent implements OnInit {
     try {
       user.isDeleted = true;
       await this.firestore.collection('users').doc(user.id).update(user);
-      this.ngOnInit();
+      this.loadUsers();
       this.toast.info('deleted successfully');
     } catch (error) {
       this.toast.error('item was not deleted');

@@ -87,8 +87,16 @@
                   <div
                     [hidden]="!loginForm.controls['password'].errors.minlength"
                   >
-                    Password must be at least 6 characters
+                    Password must be at least 8 characters
                   </div>
+                </div>
+                <div
+                  class="error-text"
+                  *ngIf="loginForm.get('password').hasError('passwordStrength')"
+                >
+                  {{ loginForm.get("password").errors["passwordStrength"] }}
+                  <!-- Password must contain at least 8 chacters, 1 Uppercase, 1
+                  Lower case and a character -->
                 </div>
               </div>
               <div class="form-group mb-3">

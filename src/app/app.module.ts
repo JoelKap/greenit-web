@@ -23,6 +23,7 @@ import { ViewRecyclesComponent } from './view-recycles/view-recycles.component';
 import { ViewRepairsComponent } from './view-repairs/view-repairs.component';
 import { NotificationComponent } from './notification/notification.component';
 import { RepairDashboardComponent } from './repair-dashboard/repair-dashboard.component';
+import { WarrantyComponent } from './warranty/warranty.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { RepairDashboardComponent } from './repair-dashboard/repair-dashboard.co
     ViewRepairsComponent,
     NotificationComponent,
     RepairDashboardComponent,
+    WarrantyComponent,
   ],
   imports: [
     BrowserModule,

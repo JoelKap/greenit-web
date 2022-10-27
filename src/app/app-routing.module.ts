@@ -9,6 +9,7 @@ import { ViewRepairsComponent } from './view-repairs/view-repairs.component';
 import { ViewRecyclesComponent } from './view-recycles/view-recycles.component';
 import { ViewDevicesComponent } from './view-devices/view-devices.component';
 import { RepairDashboardComponent } from './repair-dashboard/repair-dashboard.component';
+import { WarrantyComponent } from './warranty/warranty.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,10 @@ const routes: Routes = [
   {
     path: 'view-notifications',
     component: NotificationComponent,
+  },
+  {
+    path: 'view-warantees',
+    component: WarrantyComponent,
   },
   {
     path: 'repair-dashboard',

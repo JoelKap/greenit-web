@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
 import { Image } from '../home/image';
-
+import { PasswordStrengthValidator } from './password-strength.validators';
 import { touchAllFormFields } from '../angular-helpers/validation';
 import { AuthService } from '../auth.service';
 
@@ -16,7 +16,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
+  loginForm: any = FormGroup;
   image: any = Image;
 
   selectedUserType: any = {};
@@ -36,7 +36,14 @@ export class LoginComponent implements OnInit {
     };
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          PasswordStrengthValidator,
+        ],
+      ],
     });
   }
 
@@ -72,7 +79,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('token', 'x!4fgZ45');
       this.authService.saveUserTypeToStore(this.selectedUserType.name);
       this.router.navigateByUrl('/dashboard');
-    } else if (email === 'recycle@greenit.co.za') {
+    } else if (email === 'repair@greenit.co.za') {
       localStorage.setItem('token', 'x!4fgZ45');
       this.authService.saveUserTypeToStore(this.selectedUserType.name);
       this.router.navigateByUrl('/repair-dashboard');

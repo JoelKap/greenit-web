@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { map, take } from 'rxjs/operators';
 import {
   faUsers,
   faFileAlt,
@@ -92,72 +93,86 @@ export class RepairDashboardComponent implements OnInit, OnDestroy {
     }
 
     if (!this.isFixed) {
-      this.subscription = this.firestore
+      const result = this.firestore
         .collection<any>(`devices`, (ref) => {
           return ref
             .where('id', '==', this.device.deviceId)
             .where('isDeleted', '==', false);
         })
-        .valueChanges()
-        .subscribe((resp) => {
-          if (resp.length) {
-            let savedDevice = resp[0];
-            savedDevice.saleStatus = 'CANT REPAIR';
-            savedDevice.comment = this.commentForm.controls.comment.value;
-            this.firestore
-              .collection('devices')
-              .doc(savedDevice.id)
-              .update(savedDevice)
-              .then(async () => {
-                this.device.saleStatus = 'CANT REPAIR';
-                return this.firestore
-                  .collection('repairs')
-                  .doc(this.device.repairId)
-                  .update(this.device)
-                  .then(async () => {
-                    debugger;
-                    this.modalService.dismissAll();
-                    this.sendNotification(this.device);
-                  });
-              });
-          }
-        });
+        .get()
+        .pipe(
+          map((item: any) => {
+            return item.docs.map((dataItem: any) => dataItem.data());
+          })
+        );
+
+      result.subscribe((resp) => {
+        if (resp.length) {
+          let savedDevice = resp[0];
+          savedDevice.saleStatus = 'CANT REPAIR';
+          savedDevice.comment = this.commentForm.controls.comment.value;
+          this.firestore
+            .collection('devices')
+            .doc(savedDevice.id)
+            .update(savedDevice)
+            .then(async () => {
+              this.device.saleStatus = 'CANT REPAIR';
+              this.firestore
+                .collection('repairs')
+                .doc(this.device.repairId)
+                .update(this.device)
+                .then(async () => {
+                  this.modalService.dismissAll();
+                  alert(
+                    'device status has been updated accordingly, an email notification will be sent to the device user'
+                  );
+                  return this.sendNotification(this.device);
+                });
+            });
+        }
+      });
     } else {
       this.acceptFix();
     }
   }
 
   private acceptFix() {
-    this.subscription = this.firestore
+    const result = this.firestore
       .collection<any>(`devices`, (ref) => {
         return ref
           .where('id', '==', this.device.deviceId)
           .where('isDeleted', '==', false);
       })
-      .valueChanges()
-      .subscribe((resp) => {
-        if (resp.length) {
-          let savedDevice = resp[0];
-          savedDevice.saleStatus = '';
-          this.firestore
-            .collection('devices')
-            .doc(savedDevice.id)
-            .update(savedDevice)
-            .then(async () => {
-              this.device.saleStatus = '';
-              this.firestore
-                .collection('repairs')
-                .doc(this.device.repairId)
-                .update(this.device)
-                .then(async () => {
-                  alert(
-                    'device status has been updated accordingly, an email notification will be sent to the device user'
-                  );
-                  this.sendNotification(this.device);
-                });
-            });
-        }
-      });
+      .get()
+      .pipe(
+        map((item: any) => {
+          return item.docs.map((dataItem: any) => dataItem.data());
+        })
+      );
+
+    result.subscribe((resp) => {
+      if (resp.length) {
+        let savedDevice = resp[0];
+        savedDevice.saleStatus = '';
+        this.firestore
+          .collection('devices')
+          .doc(savedDevice.id)
+          .update(savedDevice)
+          .then(async () => {
+            this.device.saleStatus = '';
+            this.firestore
+              .collection('repairs')
+              .doc(this.device.repairId)
+              .update(this.device)
+              .then(async () => {
+                alert(
+                  'device status has been updated accordingly, an email notification will be sent to the device user'
+                );
+                return this.sendNotification(this.device);
+              });
+          });
+      }
+    });
   }
 
   fixed(device: any, isFixed: any, content: any) {
@@ -194,16 +209,23 @@ export class RepairDashboardComponent implements OnInit, OnDestroy {
   }
 
   sendNotification(device: any) {
-    debugger;
+    let resolvedMsg = '';
+    if (this.isFixed) {
+      resolvedMsg = `This device has been fixed by the requested repaired, company <b>${device.name}</b>`;
+    } else {
+      resolvedMsg = `This device has NOT been fixed by the requested repaired, company <b>${device.name}</b>
+                      <br/> the reason being <i>${this.commentForm.controls.comment.value}</i>`;
+    }
     const message = {
-      message: 'Testing out',
-      from: 'joelkapuku@gmail.com',
-      subject: 'Repair device',
+      message: resolvedMsg,
+      to: device.ownerEmail,
+      name: device.owner,
+      subject: 'DEVICE REPAIR',
     };
+
     return this.http
-      .post(BACKEND_URL + '/sendMailiMessage', message)
+      .post(BACKEND_URL + '/sendMail', message)
       .subscribe((resp: any) => {
-        debugger;
         if (resp.data) {
           this.toast.success('email sent successfully!!');
         } else {
@@ -211,16 +233,6 @@ export class RepairDashboardComponent implements OnInit, OnDestroy {
         }
       });
   }
-
-  // this.checkoutGateway.sendMail(this.marketMailForm.value).subscribe((resp: any) => {
-  //   this.spinner.hide();
-  //   this.marketMailForm.reset();
-  //   if (resp.data) {
-  //     this.toast.success(this.lang.home.successToast);
-  //   } else {
-  //     this.toast.error(this.lang.home.this.lang.home.FailToast);
-  //   }
-  // });
 
   private loadDevicesForRepair() {
     return this.firestore

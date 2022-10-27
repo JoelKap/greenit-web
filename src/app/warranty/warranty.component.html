@@ -1,0 +1,115 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="large"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+>
+  <p style="font-size: 20px; color: white">Please wait...</p>
+</ngx-spinner>
+<div
+  style="background-image: url(../../assets/images/background-header.jpg)"
+  class="pt-10 pb-21"
+></div>
+<div class="container-fluid mt-n22 px-6">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-12">
+      <!-- Page header -->
+      <div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="mb-2 mb-lg-0">
+            <h5 class="mb-0 fw-bold text-white">Welcome: {{ userType }}</h5>
+          </div>
+          <div>
+            <a class="logout" style="cursor: pointer" (click)="logout()"
+              >log out</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-6">
+    <div class="col-md-12 col-12">
+      <!-- card  -->
+      <div class="card">
+        <!-- card header  -->
+        <div class="card-header bg-white border-bottom-0 py-4">
+          <div class="mb-2 mb-lg-0">
+            <div
+              class="icon-shape icon-md bg-light-primary text-primary rounded-1"
+            >
+              <fa-icon
+                [icon]="faBackward"
+                (click)="navigateTo('dashboard')"
+                class="fs-4"
+                style="cursor: pointer"
+              ></fa-icon>
+            </div>
+            <div style="padding-bottom: 10px"></div>
+            <h4 class="mb-0">Notifications</h4>
+          </div>
+        </div>
+        <!-- table  -->
+        <div class="table-responsive">
+          <div style="padding-left: 15px">
+            <h3>Warantees</h3>
+            <p>Show devices that will expire in the next 7 days</p>
+          </div>
+          <table class="table text-nowrap mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Status</th>
+                <th>Device Type</th>
+                <th>Device Brand</th>
+                <th>Device Model</th>
+                <th>Device Imei</th>
+                <th>Send email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let warantee of warantees
+                    | paginate: { itemsPerPage: 10, currentPage: p };
+                  let i = index
+                "
+              >
+                <td class="align-left">
+                  {{
+                    warantee.emailSent == false
+                      ? "Email not sent"
+                      : "Email sent"
+                  }}
+                </td>
+                <td class="align-left">{{ warantee.deviceType }}</td>
+                <td class="align-left">
+                  {{ warantee.deviceBrand }}
+                </td>
+                <td class="align-left">
+                  {{ warantee.deviceModel }}
+                </td>
+                <td class="align-left">
+                  {{ warantee.imei }}
+                </td>
+                <td class="align-left">
+                  <div>
+                    <fa-icon
+                      [icon]="faEnvelope"
+                      style="cursor: pointer"
+                      (click)="sendWaranteeNotification(warantee)"
+                    >
+                    </fa-icon>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <pagination-controls
+              (pageChange)="p = $event"
+            ></pagination-controls>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

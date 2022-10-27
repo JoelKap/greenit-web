@@ -137,7 +137,7 @@
           <!-- heading -->
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
-              <h4 class="mb-0">Notification Services</h4>
+              <h4 class="mb-0">Recycle Notification</h4>
             </div>
             <div
               class="icon-shape icon-md bg-light-primary text-primary rounded-1"
@@ -153,6 +153,34 @@
           <!-- project number -->
           <div>
             <h1 class="fw-bold">{{ size }}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-2 col-lg-6 col-md-12 col-12 mt-6">
+      <!-- card -->
+      <div class="card rounded-3">
+        <!-- card body -->
+        <div class="card-body">
+          <!-- heading -->
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h4 class="mb-0">Warantee Notification</h4>
+            </div>
+            <div
+              class="icon-shape icon-md bg-light-primary text-primary rounded-1"
+            >
+              <fa-icon
+                [icon]="faAlignJustify"
+                class="fs-4"
+                style="cursor: pointer"
+                (click)="navigateTo('view-warantees')"
+              ></fa-icon>
+            </div>
+          </div>
+          <!-- project number -->
+          <div>
+            <h1 class="fw-bold">{{ warantees.length }}</h1>
           </div>
         </div>
       </div>
@@ -176,8 +204,6 @@
                 <th>Last name</th>
                 <th>Cellphone</th>
                 <th>Email</th>
-                <th>Identity #</th>
-                <th>Address</th>
                 <th></th>
               </tr>
             </thead>
@@ -198,8 +224,6 @@
                 <td class="align-left">{{ user.lastname }}</td>
                 <td class="align-left">{{ user.cellphone }}</td>
                 <td class="align-left">{{ user.email }}</td>
-                <td class="align-left">{{ user.idnumber }}</td>
-                <td class="align-left dark">{{ user.address }}</td>
                 <td class="align-left">
                   <div class="icon-shape icon-xs">
                     <fa-icon

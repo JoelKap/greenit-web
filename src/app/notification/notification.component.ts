@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { map, take } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import {
   faEye,
   faBackward,
@@ -19,6 +21,9 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AuthService } from '../auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from '../../environments/environment';
+
+const BACKEND_URL = environment.apiUrl;
 
 @Component({
   selector: 'app-notification',
@@ -53,13 +58,14 @@ export class NotificationComponent implements OnInit {
     private modalService: NgbModal,
     private toast: ToastrService,
     private spinner: NgxSpinnerService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {
     this.userType = this.authService.getUserTypeFromStore();
   }
 
   ngOnInit(): void {
-    this.authDocuments();
+    this.spinner.hide();
     this.loadRepairNotifications();
     this.loadRecycleNotifications();
   }
@@ -86,60 +92,81 @@ export class NotificationComponent implements OnInit {
       });
   }
 
-  private authDocuments() {
-    this.spinner.show();
-    this.authDocs.length = 0;
-    return this.firestore
-      .collection<any>(`userDocuments`)
-      .valueChanges()
-      .subscribe((resp) => {
-        this.authDocs.length = 0;
-        resp.forEach((doc) => {
-          this.firestore
-            .collection<any>(`users`, (ref) =>
-              ref.where('email', '==', doc.email)
-            )
-            .valueChanges()
-            .subscribe((users) => {
-              this.spinner.hide();
-              const user = users[0].name + ' ' + users[0].lastname;
-              doc.uploadedBy = user;
-              this.authDocs.push(doc);
-            });
-        });
+  sendRecycleNotification(recycle: any) {
+    debugger;
+    const result = this.firestore
+      .collection<any>(`devices`, (ref) => {
+        return ref.where('id', '==', recycle.id).where('isDeleted', '==', true);
+      })
+      .get()
+      .pipe(
+        map((item: any) => {
+          return item.docs.map((dataItem: any) => dataItem.data());
+        })
+      );
+
+    result.subscribe((resp) => {
+      if (resp.length) {
+        let savedDevice = resp[0];
+        savedDevice.saleStatus = 'RECYCLED';
+        this.firestore
+          .collection('devices')
+          .doc(savedDevice.id)
+          .update(savedDevice)
+          .then(async () => {
+            recycle.saleStatus = 'RECYCLED';
+            recycle.emailSent = true;
+            this.firestore
+              .collection('recycles')
+              .doc(recycle.recycleId)
+              .update(recycle)
+              .then(async () => {
+                alert(
+                  'device status has been updated accordingly, an email notification will be sent to the device user'
+                );
+                return this.sendNotifications(recycle);
+              });
+          });
+      }
+    });
+  }
+
+  sendNotifications(device: any) {
+    debugger;
+    const resolvedMsg = `This device has been recycled by the requested company <b>${device.name}</b>`;
+    const message = {
+      message: resolvedMsg,
+      to: device.ownerEmail,
+      name: device.owner,
+      subject: 'DEVICE RECYCLE',
+    };
+    return this.http
+      .post(BACKEND_URL + '/sendMail', message)
+      .subscribe((resp: any) => {
+        if (resp.data) {
+          this.toast.success('email sent successfully!!');
+          this.sendSecondNotification(device);
+        } else {
+          this.toast.error('email did not sent');
+        }
       });
   }
 
-  sendRecycleNotification(recycle: any) {
-    debugger;
-  }
-
-  sendRepairNotification(repair: any) {
-    debugger;
-  }
-
-  Download(doc: any) {
-    this.spinner.show();
-    var fileRef = this.storage.ref(`files/${doc.documentId}`);
-
-    fileRef
-      .getDownloadURL()
-      .toPromise()
-      .then((url) => {
-        this.spinner.hide();
-        var link = document.createElement('a');
-        if (link.download !== undefined) {
-          link.setAttribute('href', url);
-          link.setAttribute('target', '_blank');
-          link.style.visibility = 'hidden';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+  sendSecondNotification(device: any) {
+    const resolvedMsg = `You have received a device to recycle from <b>${device.owner}</b>`;
+    const message = {
+      message: resolvedMsg,
+      to: device.companyEmail,
+      name: device.email,
+      subject: 'DEVICE RECYCLE',
+    };
+    return this.http
+      .post(BACKEND_URL + '/sendMail', message)
+      .subscribe((resp: any) => {
+        if (resp.data) {
+        } else {
+          this.toast.error('email did not sent');
         }
-      })
-      .catch((error) => {
-        debugger;
-        // Handle any errors
       });
   }
 
