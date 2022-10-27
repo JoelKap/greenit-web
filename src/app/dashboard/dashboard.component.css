@@ -1,6 +1,8 @@
-
-
 .text-inherit {
-    color: #212529; 
-    text-decoration: none;
+  color: #212529;
+  text-decoration: none;
+}
+
+.faUsers {
+  color: lightgreen;
 }

@@ -11,6 +11,11 @@ import {
   faMoneyBillAlt,
   faAlignJustify,
   faTrash,
+  faBell,
+  faWrench,
+  faRecycle,
+  faTablet,
+  faFile,
 } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../auth.service';
@@ -45,6 +50,11 @@ export class DashboardComponent implements OnInit {
   faGlobeAfrica = faGlobeAfrica;
   faMoneyBillAlt = faMoneyBillAlt;
   faAlignJustify = faAlignJustify;
+  faBell = faBell;
+  faWrench = faWrench;
+  faRecycle = faRecycle;
+  faTablet = faTablet;
+  faFile = faFile;
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -132,7 +142,6 @@ export class DashboardComponent implements OnInit {
   }
 
   loadWarantees() {
-    debugger;
     this.warantees.length = 0;
     return this.firestore
       .collection<any>(`devices`, (ref) => {
